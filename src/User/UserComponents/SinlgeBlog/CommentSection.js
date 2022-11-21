@@ -1,13 +1,27 @@
-import React, { useState } from "react";
+import React, { useReducer, useState } from "react";
 import axios from "axios";
-import { Avatar, Box, Button, HStack, Text, Textarea } from "@chakra-ui/react";
+import {
+  Avatar,
+  Box,
+  Button,
+  HStack,
+  Text,
+  Textarea,
+  useToast,
+} from "@chakra-ui/react";
 import { useMutation } from "@tanstack/react-query";
 import PuffLoader from "react-spinners/PuffLoader";
 import { baseDomain } from "../../../Utills/BaseUrl";
+import {
+  INTIAL_STATE,
+  userExistReducer,
+} from "../../../Utills/UserAuthReducer";
 
 const CommentSection = ({ commentList, blogId }) => {
   const [localCommentList, setLocalCommentList] = useState([...commentList]);
   const [commentText, setCommentText] = useState("");
+  const toast = useToast();
+  const [userExist, dispatch] = useReducer(userExistReducer, INTIAL_STATE);
 
   const { mutate: commentOnBlogFunction, isLoading } = useMutation(
     ["sendCommentReq"],
@@ -17,7 +31,11 @@ const CommentSection = ({ commentList, blogId }) => {
         {
           content: commentText,
         },
-        { withCredentials: true }
+        {
+          headers: {
+            authorization: `Bearer ${localStorage.getItem("accesstoken")}`,
+          },
+        }
       );
     },
     {
@@ -39,8 +57,33 @@ const CommentSection = ({ commentList, blogId }) => {
         //   title:"Commented"
         // })
       },
+      onError: (error) => {
+        if (error.response.data.msg === "User not verified") {
+          toast({
+            title: "Please verify your email first to comment",
+            status: "warning",
+            isClosable: true,
+            position: "top",
+            duration: 3000,
+          });
+        }
+      },
     }
   );
+
+  const commentOnBlogHandler = () => {
+    if (localStorage.getItem("accesstoken")) {
+      commentOnBlogFunction();
+    } else {
+      toast({
+        position: "top",
+        duration: 3000,
+        title: "Please login first",
+        isClosable: false,
+        status: "error",
+      });
+    }
+  };
 
   return (
     <Box borderTop={"1px"} borderColor="gray.400" pt="5vh" mb="20vh">
@@ -109,7 +152,7 @@ const CommentSection = ({ commentList, blogId }) => {
             rounded={"full"}
             ml="40px"
             className="bg-green-500 text-white px-[1vw] py-[0.5vh] rounded-full ml-[40px]"
-            onClick={() => commentOnBlogFunction()}
+            onClick={() => commentOnBlogHandler()}
           >
             Respond
           </Button>
@@ -123,6 +166,7 @@ const CommentSection = ({ commentList, blogId }) => {
         </Box>
       ) : (
         localCommentList.map((comment, index) => {
+          console.log(comment.user);
           return (
             <Box
               py="5vh"
@@ -141,7 +185,7 @@ const CommentSection = ({ commentList, blogId }) => {
                 className="flex items-center pb-[3vh] space-x-5"
               >
                 <Avatar
-                  src={comment.user.profileImg}
+                  src={comment.user.profileImg || null}
                   alt="Profile Pic"
                   className="w-[45px] h-[45px] rounded-full"
                 />

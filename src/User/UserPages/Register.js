@@ -92,12 +92,23 @@ export default function SignupCard() {
           navigate(`/verifyemail?email=${formData.email}`);
         }, 2000);
       },
-      onError: () => {
+      onError: (error) => {
+        if (error.response.data.msg === "Email already exists") {
+          toast({
+            title: "Account already exist, please login",
+            status: "warning",
+            isClosable: true,
+            position: "top",
+            duration: 3000,
+          });
+          return;
+        }
         toast({
           title: "Something went wrong, Please try again",
           status: "error",
           isClosable: true,
           position: "top",
+          duration: 3000,
         });
       },
     }
@@ -116,7 +127,8 @@ export default function SignupCard() {
     if (
       formData.email !== "" &&
       formData.firstName !== "" &&
-      formData.lastName !== ""
+      formData.lastName !== "" &&
+      image
     ) {
       mutateRegister();
     } else {

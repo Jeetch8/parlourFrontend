@@ -16,8 +16,15 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { baseDomain } from "../../../Utills/BaseUrl";
+import { useReducer } from "react";
+import {
+  INTIAL_STATE,
+  userExistReducer,
+} from "../../../Utills/UserAuthReducer";
+import { motion } from "framer-motion";
 
-const ArticleCard2 = ({ blog, userExist }) => {
+const ArticleCard2 = ({ blog }) => {
+  const [userExist, dispatch] = useReducer(userExistReducer, INTIAL_STATE);
   const [bookmarkerd, setBookmarked] = useState(false);
   const toast = useToast();
   const naviagte = useNavigate();
@@ -25,12 +32,12 @@ const ArticleCard2 = ({ blog, userExist }) => {
   const regex = /(<([^>]+)>)/gi;
 
   const saveClickHandler = () => {
-    if (!userExist) {
+    if (!userExist.authenticated) {
       toast({
         position: "top",
         duration: 3000,
         status: "error",
-        title: "Action not allowed without authentication",
+        title: "Please login first",
         isClosable: false,
       });
       return;
@@ -59,6 +66,9 @@ const ArticleCard2 = ({ blog, userExist }) => {
       _groupHover={{ boxShadow: "lg-dark" }}
       transition="all 0.2s"
       height="full"
+      as={motion.div}
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
     >
       <Stack
         spacing={{ base: "3", lg: "5" }}

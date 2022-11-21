@@ -1,34 +1,28 @@
 import { Button, Drawer, HStack, Image, Text } from "@chakra-ui/react";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { BsHeart } from "react-icons/bs";
 import DrawerComp from "./Drawer";
 import { baseDomain } from "../../Utills/BaseUrl";
 
 const NavBar = () => {
-  const [userExist, setUSerExist] = useState(false);
+  const [userExist, setUserExist] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (document.cookie) {
-      const value = `; ${document.cookie}`;
-      const parts = value.split(`; token=`);
-      const token = parts.pop().split(";").shift();
-      if (token) {
-        setUSerExist(true);
-      }
+    if (localStorage.getItem("accesstoken")) {
+      setUserExist(true);
     }
   }, []);
 
   const sendLogoutReq = () => {
-    axios
-      .get(baseDomain + "/user/auth/logout", {
-        withCredentials: true,
-      })
-      .then(setUSerExist(false));
+    localStorage.clear();
+    axios.get(baseDomain + "/user/auth/logout");
+    setUserExist(false);
   };
 
+  console.log(userExist.authenticated);
   return (
     <HStack
       justifyContent={"space-between"}

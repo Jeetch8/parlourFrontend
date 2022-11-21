@@ -17,8 +17,19 @@ import SingleBlog from "./User/UserPages/SingleBlog";
 import AllUsers from "./Admin/AdminPages/AllUsers";
 import AdminForgotPassword from "./Admin/AdminPages/AdminForgotPassword";
 import AdminPasswordChange from "./Admin/AdminPages/AdminPasswordChange";
+import { useEffect, useReducer } from "react";
+import { userExistReducer, INTIAL_STATE } from "./Utills/UserAuthReducer";
 
 function App() {
+  const [userExist, dispatch] = useReducer(userExistReducer, INTIAL_STATE);
+
+  useEffect(() => {
+    const token = localStorage.getItem("accessToken");
+    if (token) {
+      dispatch({ type: "SET_USER_STATUS" });
+    }
+  }, []);
+
   return (
     <Routes>
       {/* User Routes */}

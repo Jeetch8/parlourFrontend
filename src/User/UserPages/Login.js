@@ -39,18 +39,15 @@ export default function SimpleCard() {
   const { isLoading, mutate } = useMutation(
     ["postDataForLogin"],
     () => {
-      return axios.post(
-        baseDomain + "/user/auth/login",
-        {
-          email: formData.email,
-          password: formData.password,
-        },
-        { withCredentials: true }
-      );
+      return axios.post(baseDomain + "/user/auth/login", {
+        email: formData.email,
+        password: formData.password,
+      });
     },
     {
       onSuccess: (data) => {
         localStorage.clear();
+        localStorage.setItem("accesstoken", data.data.token);
         localStorage.setItem("profileImg", data.data.profileImg);
         localStorage.setItem("userName", data.data.userName);
         localStorage.setItem("email", data.data.email);
