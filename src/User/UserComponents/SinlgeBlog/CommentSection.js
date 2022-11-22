@@ -72,7 +72,7 @@ const CommentSection = ({ commentList, blogId }) => {
   );
 
   const commentOnBlogHandler = () => {
-    if (localStorage.getItem("accesstoken")) {
+    if (userExist.authorization) {
       commentOnBlogFunction();
     } else {
       toast({
@@ -84,6 +84,8 @@ const CommentSection = ({ commentList, blogId }) => {
       });
     }
   };
+
+  console.log(commentList);
 
   return (
     <Box borderTop={"1px"} borderColor="gray.400" pt="5vh" mb="20vh">
@@ -185,7 +187,7 @@ const CommentSection = ({ commentList, blogId }) => {
                 className="flex items-center pb-[3vh] space-x-5"
               >
                 <Avatar
-                  src={comment.user.profileImg || null}
+                  src={comment.user?.profileImg}
                   alt="Profile Pic"
                   className="w-[45px] h-[45px] rounded-full"
                 />

@@ -19,6 +19,7 @@ import AdminForgotPassword from "./Admin/AdminPages/AdminForgotPassword";
 import AdminPasswordChange from "./Admin/AdminPages/AdminPasswordChange";
 import { useEffect, useReducer } from "react";
 import { userExistReducer, INTIAL_STATE } from "./Utills/UserAuthReducer";
+import SavedBlogs from "./User/UserPages/SavedBlogs";
 
 function App() {
   const [userExist, dispatch] = useReducer(userExistReducer, INTIAL_STATE);
@@ -45,6 +46,7 @@ function App() {
       />
       <Route path="/newPassword/:uuid" element={<NewPassword />} />
       <Route path="/blog/:blogId" element={<SingleBlog />} />
+      <Route path="/savedblogs" element={<SavedBlogs />} />
 
       {/* Admin Routes */}
       <Route path="/admin/dashboard" element={<Dashboard />} />

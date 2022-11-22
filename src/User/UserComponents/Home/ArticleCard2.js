@@ -32,16 +32,6 @@ const ArticleCard2 = ({ blog }) => {
   const regex = /(<([^>]+)>)/gi;
 
   const saveClickHandler = () => {
-    if (!userExist.authenticated) {
-      toast({
-        position: "top",
-        duration: 3000,
-        status: "error",
-        title: "Please login first",
-        isClosable: false,
-      });
-      return;
-    }
     axios
       .get(`${baseDomain}/blogs/saveBlogForUser/${blog._id}`, {
         withCredentials: true,
@@ -56,6 +46,19 @@ const ArticleCard2 = ({ blog }) => {
         })
       );
     setBookmarked(!bookmarkerd);
+  };
+
+  const saveClickFunction = () => {
+    if (!userExist.authenticated) {
+      toast({
+        position: "top",
+        duration: 3000,
+        status: "error",
+        title: "Please login first",
+        isClosable: false,
+      });
+      return;
+    }
   };
 
   return (
@@ -114,12 +117,12 @@ const ArticleCard2 = ({ blog }) => {
             {bookmarkerd ? (
               <BsFillBookmarkCheckFill
                 cursor={"pointer"}
-                onClick={() => saveClickHandler()}
+                onClick={() => saveClickFunction()}
               />
             ) : (
               <BsBookmarkPlus
                 cursor={"pointer"}
-                onClick={() => saveClickHandler()}
+                onClick={() => saveClickFunction()}
               />
             )}
           </HStack>

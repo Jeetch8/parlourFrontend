@@ -52,6 +52,8 @@ export default function SimpleCard() {
         localStorage.setItem("userName", data.data.userName);
         localStorage.setItem("email", data.data.email);
         localStorage.setItem("address", data.data.address);
+        localStorage.setItem("role", data.data.role);
+        localStorage.setItem("userId", data.data.userId);
         toast({
           status: "success",
           duration: 3000,
@@ -64,7 +66,10 @@ export default function SimpleCard() {
         }, 3000);
       },
       onError: (error) => {
-        if (error.response.data.msg === "Password was incorrect") {
+        if (
+          error.response.data.msg === "Password was incorrect" ||
+          "Email not found"
+        ) {
           toast({
             status: "error",
             duration: 3000,

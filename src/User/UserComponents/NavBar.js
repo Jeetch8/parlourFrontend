@@ -37,7 +37,7 @@ const NavBar = () => {
       />
       {userExist ? (
         <HStack pr={"5"}>
-          <Button>
+          <Button onClick={() => navigate("/savedblogs")}>
             <BsHeart />
           </Button>
           <Button onClick={() => sendLogoutReq()}>Logout</Button>

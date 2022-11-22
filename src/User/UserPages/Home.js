@@ -8,6 +8,8 @@ import RingLoader from "react-spinners/RingLoader";
 import { baseDomain } from "../../Utills/BaseUrl";
 import { motion, useScroll } from "framer-motion";
 import Carousel from "../UserComponents/Home/Carousel";
+import ContactForm from "../UserComponents/Home/ContactForm";
+import { Footer } from "../UserComponents/Footer";
 
 const Home = () => {
   const { scrollYProgress } = useScroll();
@@ -75,6 +77,8 @@ const Home = () => {
         )}
       </SimpleGrid>
       {/* </Container> */}
+      <ContactForm />
+      <Footer />
     </Stack>
   );
 };
