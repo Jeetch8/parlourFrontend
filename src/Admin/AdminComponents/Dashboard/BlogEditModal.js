@@ -42,10 +42,18 @@ function BlogEditModal({ blog }) {
 
   const deleteCommentFunction = (commentId) => {
     axios
-      .post(baseDomain + "/blogs/deleteComment", {
-        blogId: toShowBlog._id,
-        commentId: commentId,
-      })
+      .post(
+        baseDomain + "/blogs/deleteComment",
+        {
+          blogId: toShowBlog._id,
+          commentId: commentId,
+        },
+        {
+          headers: {
+            authorization: `Bearer ${localStorage.getItem("accesstoken")}`,
+          },
+        }
+      )
       .then((resp) => refetch());
   };
 
@@ -110,7 +118,7 @@ function BlogEditModal({ blog }) {
                       px="5px"
                     >
                       <Box>
-                        <Text>{comment.user.name}</Text>
+                        {/* <Text>{comment.user.name}</Text> */}
                         <Text>{comment.commentText}</Text>
                       </Box>
                       <TiDeleteOutline
