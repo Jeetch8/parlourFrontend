@@ -23,6 +23,11 @@ export const Footer = () => {
       as={motion.div}
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
+      // flexFlow={{ lg: "none", base: "none", sm: "column" }}
+      flexFlow="row wrap"
+      rowGap={10}
+      flex
+      alignItems="start"
     >
       <Text>Logo</Text>
       <UnorderedList listStyleType={"none"} lineHeight="8">

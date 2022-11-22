@@ -22,6 +22,7 @@ import {
   userExistReducer,
 } from "../../../Utills/UserAuthReducer";
 import { motion } from "framer-motion";
+import { useQuery } from "@tanstack/react-query";
 
 const ArticleCard2 = ({ blog }) => {
   const [userExist, dispatch] = useReducer(userExistReducer, INTIAL_STATE);
@@ -31,22 +32,29 @@ const ArticleCard2 = ({ blog }) => {
   const formatter = buildFormatter(frenchStrings);
   const regex = /(<([^>]+)>)/gi;
 
-  const saveClickHandler = () => {
-    axios
-      .get(`${baseDomain}/blogs/saveBlogForUser/${blog._id}`, {
-        withCredentials: true,
-      })
-      .then(
+  const { refetch: saveClickHandler } = useQuery(
+    ["sendSaveReq"],
+    () => {
+      return axios.get(`${baseDomain}/blogs/saveBlogForUser/${blog._id}`, {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("accesstoken")}`,
+        },
+      });
+    },
+    {
+      onSuccess: () => {
         toast({
           position: "top",
           duration: 3000,
           status: "success",
           title: "Blog saved",
           isClosable: false,
-        })
-      );
-    setBookmarked(!bookmarkerd);
-  };
+        });
+        setBookmarked(!bookmarkerd);
+      },
+      enabled: false,
+    }
+  );
 
   const saveClickFunction = () => {
     if (!userExist.authenticated) {
@@ -59,6 +67,7 @@ const ArticleCard2 = ({ blog }) => {
       });
       return;
     }
+    saveClickHandler();
   };
 
   return (

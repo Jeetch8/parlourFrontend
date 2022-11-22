@@ -12,8 +12,11 @@ const SideBar = () => {
   const location = useLocation().pathname;
   const sendLogoutReq = () => {
     axios.get(baseDomain + "/user/auth/logout", {
-      withCredentials: true,
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("accesstoken")}`,
+      },
     });
+    localStorage.clear();
   };
   return (
     <VStack

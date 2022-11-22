@@ -39,7 +39,7 @@ const Carousel = () => {
       _dark={{
         bg: "#3e3e3e",
       }}
-      px={10}
+      px={{ base: 0, lg: 10 }}
       alignItems="center"
       justifyContent="center"
     >
