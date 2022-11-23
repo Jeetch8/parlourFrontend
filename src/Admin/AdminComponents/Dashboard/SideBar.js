@@ -79,9 +79,15 @@ const SideBar = () => {
             <h2>Write Article</h2>
           </Button>
         </VStack>
-        <Button onClick={() => sendLogoutReq()} w="full">
-          Logout
-        </Button>
+        {localStorage.getItem("role") === "admin" ? (
+          <Button onClick={() => sendLogoutReq()} w="full">
+            Logout
+          </Button>
+        ) : (
+          <Button onClick={() => navigate("/admin/login")} w="full">
+            Login
+          </Button>
+        )}
       </VStack>
     </VStack>
   );

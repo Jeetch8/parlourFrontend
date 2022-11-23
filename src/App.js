@@ -20,6 +20,8 @@ import AdminPasswordChange from "./Admin/AdminPages/AdminPasswordChange";
 import { useEffect, useReducer } from "react";
 import { userExistReducer, INTIAL_STATE } from "./Utills/UserAuthReducer";
 import SavedBlogs from "./User/UserPages/SavedBlogs";
+import AdminRoutes from "./Utills/AdminRoutes";
+import AdminNotFound from "./Admin/AdminPages/AdminNotFound";
 
 function App() {
   const [userExist, dispatch] = useReducer(userExistReducer, INTIAL_STATE);
@@ -49,16 +51,19 @@ function App() {
       <Route path="/savedblogs" element={<SavedBlogs />} />
 
       {/* Admin Routes */}
-      <Route path="/admin/dashboard" element={<Dashboard />} />
+      <Route path="/admin/adminnotvalid" element={<AdminNotFound />} />
       <Route path="/admin/login" element={<AdminLogin />} />
-      <Route path="/admin/dashboard/writeblog" element={<WriteBlog />} />
-      <Route path="/admin/dashboard/blogs" element={<AllBlogs />} />
-      <Route path="/admin/dashboard/usersinfo" element={<AllUsers />} />
-      <Route path="/admin/forgotpassword" element={<AdminForgotPassword />} />
-      <Route
-        path="/admin/passwordchange/:uuid"
-        element={<AdminPasswordChange />}
-      />
+      <Route element={<AdminRoutes />}>
+        <Route path="/admin/dashboard" element={<Dashboard />} />
+        <Route path="/admin/dashboard/writeblog" element={<WriteBlog />} />
+        <Route path="/admin/dashboard/blogs" element={<AllBlogs />} />
+        <Route path="/admin/dashboard/usersinfo" element={<AllUsers />} />
+        <Route path="/admin/forgotpassword" element={<AdminForgotPassword />} />
+        <Route
+          path="/admin/passwordchange/:uuid"
+          element={<AdminPasswordChange />}
+        />
+      </Route>
 
       {/* Page Not found */}
       <Route path="*" element={<UserNotFoundPage />} />

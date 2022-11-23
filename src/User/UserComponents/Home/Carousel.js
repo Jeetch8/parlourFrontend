@@ -1,12 +1,18 @@
 import { Box, Flex, HStack, Image, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 
+// const slides = [
+//   "https://i.ibb.co/V2wLDhY/woman-doing-facial-mask-321217.jpg",
+//   "https://i.ibb.co/0hcyF9M/manicure-nail-polish.jpg",
+//   "https://i.ibb.co/VVrggd4/best-facials-for-acne-1080x628.jpg",
+//   "https://i.ibb.co/TMBCLrt/Blog3-Best-Acne-Treatmentfor-Scars.jpg",
+//   "https://i.ibb.co/6tTkhCj/file-3.png",
+// ];
+
 const slides = [
-  "https://i.ibb.co/V2wLDhY/woman-doing-facial-mask-321217.jpg",
-  "https://i.ibb.co/0hcyF9M/manicure-nail-polish.jpg",
-  "https://i.ibb.co/VVrggd4/best-facials-for-acne-1080x628.jpg",
-  "https://i.ibb.co/TMBCLrt/Blog3-Best-Acne-Treatmentfor-Scars.jpg",
-  "https://i.ibb.co/6tTkhCj/file-3.png",
+  { customerName: "Lorem epsum", experience: "never had such experince" },
+  { customerName: "Lorem epsum", experience: "Quick and reliable" },
+  { customerName: "Lorem epsum", experience: "Honest and loving" },
 ];
 
 const Carousel = () => {
@@ -34,19 +40,23 @@ const Carousel = () => {
   }, [slidesCount]);
   return (
     <Flex
-      w="full"
-      bg="#edf3f8"
-      _dark={{
-        bg: "#3e3e3e",
-      }}
-      px={{ base: 0, lg: 10 }}
+      w="50%"
+      bg="black"
+      height={"100%"}
+      // px={{ base: 0, lg: 10 }}
       alignItems="center"
       justifyContent="center"
     >
       <Flex w="full" overflow="hidden" position={"relative"}>
         <Flex pos="relative" h="80vh" w="full" {...carouselStyle}>
           {slides.map((slide, sid) => (
-            <Box key={`slide-${sid}`} flex="none" boxSize="full" shadow="md">
+            <Box
+              key={`slide-${sid}`}
+              flex="none"
+              boxSize="full"
+              shadow="md"
+              color={"ghostwhite"}
+            >
               <Text
                 color="white"
                 fontSize="xs"
@@ -57,13 +67,7 @@ const Carousel = () => {
               >
                 {sid + 1} / {slidesCount}
               </Text>
-              <Image
-                src={slide}
-                alt="carousel image"
-                boxSize="full"
-                backgroundSize="cover"
-                backgroundPosition={"center"}
-              />
+              <Text></Text>
             </Box>
           ))}
         </Flex>

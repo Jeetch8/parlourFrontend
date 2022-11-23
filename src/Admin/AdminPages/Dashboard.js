@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Flex,
   HStack,
   SimpleGrid,
   Text,
@@ -16,7 +17,12 @@ import MapGraph from "../AdminComponents/Dashboard/Graphs/MapsGraph";
 
 const Dashboard = () => {
   return (
-    <HStack bgColor={"gray.50"} alignItems="start">
+    <Flex
+      flexDirection={{ md: "row", base: "column" }}
+      bgColor={"gray.50"}
+      alignItems="start"
+      overflowX={"hidden"}
+    >
       <SideBar />
       <Box w="88vw" h="100vw" pt="3vh" px="2vw" pb="5vh">
         <HStack rowGap={"5vw"} spacing="8vw" w="80vw">
@@ -126,7 +132,7 @@ const Dashboard = () => {
           </Box>
         </SimpleGrid>
       </Box>
-    </HStack>
+    </Flex>
   );
 };
 

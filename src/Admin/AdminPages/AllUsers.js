@@ -28,9 +28,13 @@ const AllUsers = () => {
   const toast = useToast();
 
   const { isLoading, refetch: refetchAllData } = useQuery(
-    ["fetchAllBlogs"],
+    ["fetchAllUsers"],
     () => {
-      return axios.get(baseDomain + "/admin/allusers");
+      return axios.get(baseDomain + "/admin/allusers", {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("accesstoken")}`,
+        },
+      });
     },
     {
       onSuccess: (data) => {
@@ -43,7 +47,9 @@ const AllUsers = () => {
   const deleteUserReq = (userId) => {
     axios
       .get(`${baseDomain}/admin/deleteUser/${userId}`, {
-        withCredentials: true,
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("accesstoken")}`,
+        },
       })
       .then((resp) => {
         resp.data.success

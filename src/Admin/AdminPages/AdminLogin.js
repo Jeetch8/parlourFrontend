@@ -44,7 +44,13 @@ const App = () => {
       );
     },
     {
-      onSuccess: (successData) => {
+      onSuccess: (data) => {
+        localStorage.clear();
+        localStorage.setItem("accesstoken", data.data.token);
+        localStorage.setItem("profileImg", data.data.profileImg);
+        localStorage.setItem("userName", data.data.userName);
+        localStorage.setItem("email", data.data.email);
+        localStorage.setItem("role", data.data.role);
         toast({
           title: "Login Successfull",
           status: "success",

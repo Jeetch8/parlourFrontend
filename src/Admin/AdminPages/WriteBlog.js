@@ -75,7 +75,11 @@ class Editor extends Component {
           status,
           blogImg: this.state.image,
         },
-        { withCredentials: true }
+        {
+          headers: {
+            authorization: `Bearer ${localStorage.getItem("accesstoken")}`,
+          },
+        }
       )
       .then((resp) => console.log(resp.data))
       .then(() => {

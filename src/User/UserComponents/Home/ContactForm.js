@@ -37,10 +37,12 @@ export default function ContactForm() {
       as={motion.div}
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
+      pb="5vh"
     >
       <Flex>
         <Box
-          bg="#02054B"
+          // bg="#02054B"
+          bg="black"
           color="white"
           borderRadius="lg"
           m={{ sm: 4, md: 16, lg: 10 }}
