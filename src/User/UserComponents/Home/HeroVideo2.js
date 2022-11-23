@@ -31,6 +31,8 @@ const HeroVideo2 = () => {
         src="https://streamable.com/e/sjj8y2?autoplay=1&nocontrols=1"
         width={"100%"}
         height="100%"
+        autostart="1"
+        autoPlay={true}
         allow="autoplay"
         style={{
           position: "absolute",
