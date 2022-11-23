@@ -120,15 +120,29 @@ const Home = () => {
       {/* </Container> */}
       <Servicesavailable />
       <ContactForm />
-      <div style="width:100%;height:0px;position:relative;padding-bottom:100.000%;">
+      <div
+        style={{
+          width: "100%",
+          height: "0px",
+          position: "relative",
+          paddingBottom: "100.000%",
+        }}
+      >
         <iframe
           src="https://streamable.com/e/sjj8y2?autoplay=1&nocontrols=1"
-          frameborder="0"
+          frameBorder={"0"}
           width="100%"
           height="100%"
-          allowfullscreen
+          allowFullScreen
           allow="autoplay"
-          style="width:100%;height:100%;position:absolute;left:0px;top:0px;overflow:hidden;"
+          style={{
+            width: "100%",
+            height: "100%",
+            position: "absolute",
+            left: "0px",
+            top: "0px",
+            overflow: "hidden",
+          }}
         ></iframe>
       </div>
 

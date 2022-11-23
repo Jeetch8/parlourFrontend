@@ -81,9 +81,9 @@ const Carousel2 = () => {
                     ></Box>
                     <Image src={item.img} width="200px" />
                   </Box>
-                  <Text w={{ lg: "30vw", base: "60vw" }}>
+                  <blockquote w={{ lg: "30vw", base: "60vw" }}>
                     {item.experience}
-                  </Text>
+                  </blockquote>
                   <Text color={"white"} fontStyle="italic">
                     {item.customerName}
                   </Text>
