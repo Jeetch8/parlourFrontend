@@ -29,6 +29,7 @@ import SyncLoader from "react-spinners/SyncLoader";
 import { baseDomain } from "../../Utills/BaseUrl";
 
 export default function SignupCard() {
+  const [selectedAddress, setSelectedAddress] = useState("");
   const [selectedValue, setSelectedValue] = useState({});
   const [image, setImage] = useState(null);
   const [addressInput, setAddressInput] = useState("");
@@ -78,6 +79,7 @@ export default function SignupCard() {
         password: formData.password,
         email: formData.email,
         profileImg: image,
+        address: selectedAddress,
       });
     },
     {
@@ -128,6 +130,7 @@ export default function SignupCard() {
       formData.email !== "" &&
       formData.firstName !== "" &&
       formData.lastName !== "" &&
+      selectedAddress !== "" &&
       image
     ) {
       mutateRegister();
@@ -158,6 +161,7 @@ export default function SignupCard() {
     {
       enabled: false,
       onSuccess: (data) => {
+        console.log(data);
         data.data.features.forEach((item) => {
           rawOptions.push({
             value: item.properties.formatted,
@@ -322,10 +326,11 @@ export default function SignupCard() {
               <FormLabel>Address</FormLabel>
               <Select
                 onInputChange={(inputData) => handleSlectInputChange(inputData)}
-                tabSelectsValue
+                onChange={(value) => setSelectedAddress(value.value)}
                 loadingMessage={"Please wait"}
                 options={options}
                 isLoading={isLoading}
+                isSearchable={true}
                 name="address"
                 value={selectedValue.label}
               />

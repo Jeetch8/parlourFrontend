@@ -11,7 +11,7 @@ const HeroVideo2 = () => {
       background={"black"}
       height={{ base: "70vh", lg: "100vh" }}
     >
-      <iframe
+      {/* <iframe
         src="https://streamable.com/e/sjj8y2?autoplay=1&nocontrols=1"
         frameborder="0"
         width="100%"
@@ -26,7 +26,12 @@ const HeroVideo2 = () => {
           top: "0px",
           overflow: "hidden",
         }}
-      ></iframe>
+      ></iframe> */}
+      <embed
+        src="https://streamable.com/e/sjj8y2?autoplay=1&nocontrols=1"
+        width={"100%"}
+        height="100%"
+      ></embed>
     </Box>
   );
 };
