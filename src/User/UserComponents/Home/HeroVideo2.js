@@ -9,20 +9,9 @@ const HeroVideo2 = () => {
       width={{ base: "100%", lg: "50.7%" }}
       position="relative"
       background={"black"}
-      height={{ base: "91.5vh", lg: "100vh" }}
-      // style={{
-      //   width: "50.7%",
-      //   height: "0px",
-      //   marginTop: "0",
-      //   marginBottom: "0",
-      //   paddingTop: "0",
-      //   paddingBottom: "0",
-      //   backgroundColor: "black",
-      //   position: "relative",
-      //   paddingBottom: "50%",
-      // }}
+      height={{ base: "70vh", lg: "100vh" }}
     >
-      <motion.iframe
+      <iframe
         src="https://streamable.com/e/sjj8y2?autoplay=1&nocontrols=1"
         frameborder="0"
         width="100%"
@@ -37,7 +26,7 @@ const HeroVideo2 = () => {
           top: "0px",
           overflow: "hidden",
         }}
-      ></motion.iframe>
+      ></iframe>
     </Box>
   );
 };
