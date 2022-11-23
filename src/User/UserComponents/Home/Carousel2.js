@@ -41,7 +41,13 @@ const Carousel2 = () => {
     },
   ];
   return (
-    <Box w={{ lg: "49.4%", base: "100%" }} bg="black" height={"full"} py="10vh">
+    <Box
+      w={{ lg: "49.4%", base: "100%" }}
+      bg="black"
+      height={"full"}
+      py="10vh"
+      px={{ md: "10vw", sm: "0", lg: "3vw" }}
+    >
       <Box
         fontFamily={"Ubuntu"}
         height={"100%"}
