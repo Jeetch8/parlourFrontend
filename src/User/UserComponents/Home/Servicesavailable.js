@@ -1,4 +1,4 @@
-import { Box, Image, SimpleGrid, Text } from "@chakra-ui/react";
+import { Box, SimpleGrid, Text } from "@chakra-ui/react";
 import React from "react";
 
 const Servicesavailable = () => {
@@ -96,12 +96,3 @@ const Servicesavailable = () => {
 };
 
 export default Servicesavailable;
-// https://promakeupcenter.com/wp-content/uploads/2016/07/17601786_xxl-1080x1519.jpg
-// https://image.wedmegood.com/resized/800X/uploads/member/544433/1612431558_Best_Makeup_Artist_in_Kolkata___Makeoverxpress_Makeup_Service___Bridal_Makeup_Artist_Rimanka__12_.png
-
-{
-  /* <img src="https://i.ibb.co/2WBqtdC/pexels-alexander-krivitskiy-14425843.jpg" alt="pexels-alexander-krivitskiy-14425843" border="0"> */
-}
-{
-  /* <img src="https://i.ibb.co/dc0pqTj/pexels-shiny-diamond-3373716.jpg" alt="pexels-shiny-diamond-3373716" border="0"></img> */
-}

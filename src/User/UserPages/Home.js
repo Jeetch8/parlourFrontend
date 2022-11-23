@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import NavBar from "../UserComponents/NavBar";
 import ArticleCard2 from "../UserComponents/Home/ArticleCard2";
 import {
-  Box,
-  Container,
   Flex,
   HStack,
   Image,
@@ -14,19 +12,15 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import RingLoader from "react-spinners/RingLoader";
 import { baseDomain } from "../../Utills/BaseUrl";
-import { motion, useScroll } from "framer-motion";
-import Carousel from "../UserComponents/Home/Carousel";
+import { motion } from "framer-motion";
 import ContactForm from "../UserComponents/Home/ContactForm";
 import { Footer } from "../UserComponents/Footer";
-import HeroVideo from "../UserComponents/Home/HeroVideo";
 import HeroVideo2 from "../UserComponents/Home/HeroVideo2";
 import Carousel2 from "../UserComponents/Home/Carousel2";
 import Servicesavailable from "../UserComponents/Home/Servicesavailable";
 
 const Home = () => {
-  const { scrollYProgress } = useScroll();
   const [blogsList, setBlogList] = useState([]);
 
   const { isLoading, isFetching } = useQuery(
@@ -48,12 +42,7 @@ const Home = () => {
         align={"center"}
         justify={"center"}
         bg="#FFFCF7"
-        // initial={{ x: "0vw" }}
-        // animate={{ x: "-100vw", transition: { duration: 3 } }}
-        // exit={{ x: "-100vw" }}
       >
-        {/* <RingLoader />
-        <h2>Please wait...</h2> */}
         <motion.div
           initial={{ opacity: 0.1 }}
           animate={{
@@ -117,38 +106,11 @@ const Home = () => {
           <h2>Nothing to Show Here</h2>
         )}
       </SimpleGrid>
-      {/* </Container> */}
       <Servicesavailable />
       <ContactForm />
-      <div
-        style={{
-          width: "100%",
-          height: "0px",
-          position: "relative",
-          paddingBottom: "100.000%",
-        }}
-      >
-        <iframe
-          src="https://streamable.com/e/sjj8y2?autoplay=1&nocontrols=1"
-          frameBorder={"0"}
-          width="100%"
-          height="100%"
-          allowFullScreen
-          allow="autoplay"
-          style={{
-            width: "100%",
-            height: "100%",
-            position: "absolute",
-            left: "0px",
-            top: "0px",
-            overflow: "hidden",
-          }}
-        ></iframe>
-      </div>
-
-      {/* <div class="mapouter"><div class="gmap_canvas"><iframe width="1080" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q=zolo%20euphoria&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><a href="https://123movies-to.org"></a><br><style>.mapouter{position:relative;text-align:right;height:500px;width:1080px;}</style><a href="https://www.embedgooglemap.net">embed code google map</a><style>.gmap_canvas {overflow:"hidden";background:none!important;height:"500px";width:"1080px";}</style></div></div> */}
 
       <iframe
+        title="google-maps"
         src="https://maps.google.com/maps?q=zolo%20euphoria&t=&z=13&ie=UTF8&iwloc=&output=embed"
         height="550px"
       ></iframe>
