@@ -120,6 +120,17 @@ const Home = () => {
       {/* </Container> */}
       <Servicesavailable />
       <ContactForm />
+      <div style="width:100%;height:0px;position:relative;padding-bottom:100.000%;">
+        <iframe
+          src="https://streamable.com/e/sjj8y2?autoplay=1&nocontrols=1"
+          frameborder="0"
+          width="100%"
+          height="100%"
+          allowfullscreen
+          allow="autoplay"
+          style="width:100%;height:100%;position:absolute;left:0px;top:0px;overflow:hidden;"
+        ></iframe>
+      </div>
 
       {/* <div class="mapouter"><div class="gmap_canvas"><iframe width="1080" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q=zolo%20euphoria&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><a href="https://123movies-to.org"></a><br><style>.mapouter{position:relative;text-align:right;height:500px;width:1080px;}</style><a href="https://www.embedgooglemap.net">embed code google map</a><style>.gmap_canvas {overflow:"hidden";background:none!important;height:"500px";width:"1080px";}</style></div></div> */}
 
