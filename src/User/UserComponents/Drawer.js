@@ -35,10 +35,9 @@ export default function DrawerComp() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const firstField = React.useRef();
   const [formData, setformData] = useState({
-    name: "",
-    email: "",
-    password: "",
-    address: "",
+    name: localStorage.getItem("name"),
+    email: localStorage.getItem("email"),
+    address: localStorage.getItem("address"),
     profileImg: image,
   });
 
@@ -59,7 +58,9 @@ export default function DrawerComp() {
     ["updateUserProfile"],
     () => {
       return axios.post(baseDomain + "/user/auth/updateprofile", formData, {
-        withCredentials: true,
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("accesstoken")}`,
+        },
       });
     },
     {
@@ -73,20 +74,32 @@ export default function DrawerComp() {
         });
         onClose();
       },
+      onError: () => {
+        toast({
+          status: "error",
+          duration: 2000,
+          title: "Please try again",
+          isClosable: false,
+          position: "top",
+        });
+      },
     }
   );
 
   const handleSubmit = () => {
-    // if(   formData.name=== "",
-    // formData.email==="",
-    // formData.password=== "",
-    // formData.address=== ""){
-    //   toast({
-    //     status:"error",
-    //     duration:2000,
-    //     title:"Fields cannot be empty"
-    //   })
-    // }
+    if (
+      formData.name === "" &&
+      formData.email === "" &&
+      formData.password === "" &&
+      formData.address === ""
+    ) {
+      toast({
+        status: "error",
+        duration: 2000,
+        title: "Fields cannot be empty",
+        position: "top",
+      });
+    }
     mutate();
   };
 
@@ -136,6 +149,7 @@ export default function DrawerComp() {
                 <Input
                   ref={firstField}
                   id="username"
+                  defaultValue={formData.name}
                   placeholder={localStorage.getItem("userName")}
                 />
               </Box>
@@ -144,6 +158,7 @@ export default function DrawerComp() {
                 <FormLabel htmlFor="url">Email</FormLabel>
                 <Input
                   id="email"
+                  defaultValue={formData.email}
                   placeholder={localStorage.getItem("email")}
                   onInput={(e) => handeleFormDtata(e)}
                 />
@@ -153,32 +168,10 @@ export default function DrawerComp() {
                 <FormLabel htmlFor="url">Address</FormLabel>
                 <Input
                   id="address"
+                  defaultValue={formData.address}
                   placeholder={localStorage.getItem("address")}
                   onInput={(e) => handeleFormDtata(e)}
                 />
-              </Box>
-
-              <Box>
-                <FormControl id="password">
-                  <FormLabel>New Password</FormLabel>
-                  <InputGroup>
-                    <Input
-                      type={showPassword ? "text" : "password"}
-                      onInput={(e) => handeleFormDtata(e)}
-                      name="password"
-                    />
-                    <InputRightElement h={"full"}>
-                      <Button
-                        variant={"ghost"}
-                        onClick={() =>
-                          setShowPassword((showPassword) => !showPassword)
-                        }
-                      >
-                        {showPassword ? <ViewIcon /> : <ViewOffIcon />}
-                      </Button>
-                    </InputRightElement>
-                  </InputGroup>
-                </FormControl>
               </Box>
             </Stack>
           </DrawerBody>
