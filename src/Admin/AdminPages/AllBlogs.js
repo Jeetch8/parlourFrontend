@@ -30,7 +30,7 @@ const AllBlogs = () => {
   const { refetch, isLoading, isFetching } = useQuery(
     ["fetchAllBlogs"],
     () => {
-      return axios.get(baseDomain + "/blogs/", {});
+      return axios.get(baseDomain + "/blogs/");
     },
     {
       onSuccess: (data) => {

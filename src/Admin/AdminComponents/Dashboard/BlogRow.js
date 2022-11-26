@@ -23,7 +23,9 @@ const BlogRow = ({ blog, setRefetchBlogs, refetchBlogs }) => {
   const deleteBlogReq = (blogId) => {
     axios
       .delete(`${baseDomain}/blogs/deleteBlog/${blog._id}`, {
-        withCredentials: true,
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("accesstoken")}`,
+        },
       })
       .then(
         toast({
