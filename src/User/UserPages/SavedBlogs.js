@@ -20,6 +20,7 @@ const SavedBlogs = () => {
     },
     {
       onSuccess: (data) => {
+        console.log(data.data);
         setSavedBlogs([...data.data.savedBlogs]);
       },
     }

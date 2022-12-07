@@ -72,7 +72,7 @@ const CommentSection = ({ commentList, blogId }) => {
   );
 
   const commentOnBlogHandler = () => {
-    if (userExist.authorization) {
+    if (localStorage.getItem("accesstoken")) {
       commentOnBlogFunction();
     } else {
       toast({

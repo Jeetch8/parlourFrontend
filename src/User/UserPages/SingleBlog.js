@@ -7,7 +7,7 @@ import TimeAgo from "react-timeago";
 import frenchStrings from "react-timeago/lib/language-strings/en";
 import buildFormatter from "react-timeago/lib/formatters/buildFormatter";
 import getReadingTime from "blog-reading-time";
-import { BsBookmarkPlus } from "react-icons/bs";
+import { BsBookmarkPlus, BsFillBookmarkCheckFill } from "react-icons/bs";
 import parse from "html-react-parser";
 import "./Unreset.scss";
 import { BiLike } from "react-icons/bi";
@@ -32,6 +32,7 @@ import { Footer } from "../UserComponents/Footer";
 
 const SingleBlog = () => {
   const [likedBlog, setLikedBlog] = useState({ bool: false, num: 0 });
+  const [bookmarkerd, setBookmarked] = useState(false);
   const [respData, setRespData] = useState({});
   const { blogId } = useParams();
   const formatter = buildFormatter(frenchStrings);
@@ -77,7 +78,43 @@ const SingleBlog = () => {
     }
   );
 
-  const savePostFunction = () => {};
+  const { refetch: saveClickHandler } = useQuery(
+    ["sendSaveReq"],
+    () => {
+      return axios.get(`${baseDomain}/blogs/saveBlogForUser/${blogId}`, {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("accesstoken")}`,
+        },
+      });
+    },
+    {
+      onSuccess: () => {
+        toast({
+          position: "top",
+          duration: 3000,
+          status: "success",
+          title: "Blog saved",
+          isClosable: false,
+        });
+        setBookmarked(!bookmarkerd);
+      },
+      enabled: false,
+    }
+  );
+
+  const saveClickFunction = () => {
+    if (!localStorage.getItem("accesstoken")) {
+      toast({
+        position: "top",
+        duration: 3000,
+        status: "error",
+        title: "Please login first",
+        isClosable: false,
+      });
+      return;
+    }
+    saveClickHandler();
+  };
 
   const likePostFunction = () => {
     if (!userExist.authenticated) {
@@ -140,7 +177,17 @@ const SingleBlog = () => {
                   </Text>
                 </Box>
               </HStack>
-              <BsBookmarkPlus onClick={() => savePostFunction()} />
+              {bookmarkerd ? (
+                <BsFillBookmarkCheckFill
+                  cursor={"pointer"}
+                  onClick={() => saveClickFunction()}
+                />
+              ) : (
+                <BsBookmarkPlus
+                  cursor={"pointer"}
+                  onClick={() => saveClickFunction()}
+                />
+              )}
             </HStack>
             {/* Article */}
             <Box>
@@ -169,7 +216,17 @@ const SingleBlog = () => {
                   )}
                   <Text>{likedBlog.num}</Text>
                 </HStack>
-                <BsBookmarkPlus />
+                {bookmarkerd ? (
+                  <BsFillBookmarkCheckFill
+                    cursor={"pointer"}
+                    onClick={() => saveClickFunction()}
+                  />
+                ) : (
+                  <BsBookmarkPlus
+                    cursor={"pointer"}
+                    onClick={() => saveClickFunction()}
+                  />
+                )}
               </HStack>
             </Box>
             <CommentSection

@@ -34,6 +34,8 @@ const NavBar = () => {
       <Image
         src="https://i.ibb.co/DzZKZHY/medium-icon-white-on-black.png"
         width={"60px"}
+        onClick={() => navigate("/")}
+        cursor={"pointer"}
       />
       {userExist ? (
         <HStack pr={"5"}>

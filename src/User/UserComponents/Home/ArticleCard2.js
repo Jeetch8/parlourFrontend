@@ -57,7 +57,7 @@ const ArticleCard2 = ({ blog }) => {
   );
 
   const saveClickFunction = () => {
-    if (!userExist.authenticated) {
+    if (!localStorage.getItem("accesstoken")) {
       toast({
         position: "top",
         duration: 3000,
