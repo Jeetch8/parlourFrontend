@@ -1,4 +1,4 @@
-import { Button, Drawer, HStack, Image, Text } from "@chakra-ui/react";
+import { Button, HStack, Image, Text } from "@chakra-ui/react";
 import axios from "axios";
 import React, { useEffect, useReducer, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -7,14 +7,10 @@ import DrawerComp from "./Drawer";
 import { baseDomain } from "../../Utills/BaseUrl";
 
 const NavBar = () => {
-  const [userExist, setUserExist] = useState(false);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (localStorage.getItem("accesstoken")) {
-      setUserExist(true);
-    }
-  }, []);
+  const [userExist, setUserExist] = useState(
+    localStorage.getItem("accesstoken") ? true : false
+  );
 
   const sendLogoutReq = () => {
     localStorage.clear();
@@ -22,7 +18,6 @@ const NavBar = () => {
     setUserExist(false);
   };
 
-  console.log(userExist.authenticated);
   return (
     <HStack
       justifyContent={"space-between"}

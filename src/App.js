@@ -22,6 +22,7 @@ import { userExistReducer, INTIAL_STATE } from "./Utills/UserAuthReducer";
 import SavedBlogs from "./User/UserPages/SavedBlogs";
 import AdminRoutes from "./Utills/AdminRoutes";
 import AdminNotFound from "./Admin/AdminPages/AdminNotFound";
+import EditBlog from "./Admin/AdminPages/EditBlog";
 
 function App() {
   const [userExist, dispatch] = useReducer(userExistReducer, INTIAL_STATE);
@@ -51,7 +52,6 @@ function App() {
       <Route path="/savedblogs" element={<SavedBlogs />} />
 
       {/* Admin Routes */}
-      <Route path="/admin/adminnotvalid" element={<AdminNotFound />} />
       <Route path="/admin/login" element={<AdminLogin />} />
       <Route element={<AdminRoutes />}>
         <Route path="/admin/dashboard" element={<Dashboard />} />
@@ -62,6 +62,10 @@ function App() {
         <Route
           path="/admin/passwordchange/:uuid"
           element={<AdminPasswordChange />}
+        />
+        <Route
+          path="/admin/dashboard/editblog/:blogId"
+          element={<EditBlog />}
         />
       </Route>
 

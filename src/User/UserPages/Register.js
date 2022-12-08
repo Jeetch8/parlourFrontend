@@ -130,8 +130,7 @@ export default function SignupCard() {
       formData.email !== "" &&
       formData.firstName !== "" &&
       formData.lastName !== "" &&
-      selectedAddress !== "" &&
-      image
+      selectedAddress !== ""
     ) {
       mutateRegister();
     } else {

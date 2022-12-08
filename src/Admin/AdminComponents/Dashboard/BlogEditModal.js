@@ -20,8 +20,10 @@ import axios from "axios";
 import ClipLoader from "react-spinners/ClipLoader";
 import { useQuery } from "@tanstack/react-query";
 import { baseDomain } from "../../../Utills/BaseUrl";
+import { useNavigate } from "react-router-dom";
 
 function BlogEditModal({ blog }) {
+  const navigate = useNavigate();
   const [toShowBlog, setToShowBlog] = useState(blog);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -151,7 +153,11 @@ function BlogEditModal({ blog }) {
             <Button colorScheme="blue" mr={3} onClick={onClose}>
               Close
             </Button>
-            <Button variant="ghost">Secondary Action</Button>
+            <Button
+              onClick={() => navigate(`/admin/dashboard/editblog/${blog._id}`)}
+            >
+              Edit Blog
+            </Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

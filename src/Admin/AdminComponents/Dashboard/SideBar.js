@@ -44,6 +44,7 @@ const SideBar = () => {
           <Image
             src="https://i.ibb.co/DzZKZHY/medium-icon-white-on-black.png"
             width={70}
+            onClick={() => navigate("/admin/dashboard/")}
           />
           <Button
             onClick={() => navigate("/admin/dashboard/")}

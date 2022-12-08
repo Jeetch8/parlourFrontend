@@ -1,11 +1,9 @@
-import React, { useState } from "react";
-import { BsBookmarkPlus, BsFillBookmarkCheckFill } from "react-icons/bs";
+import React from "react";
 import getReadingTime from "blog-reading-time";
 import TimeAgo from "react-timeago";
 import frenchStrings from "react-timeago/lib/language-strings/en";
 import buildFormatter from "react-timeago/lib/formatters/buildFormatter";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
 import {
   Box,
   HStack,
@@ -13,62 +11,13 @@ import {
   Stack,
   Text,
   useBreakpointValue as mode,
-  useToast,
 } from "@chakra-ui/react";
-import { baseDomain } from "../../../Utills/BaseUrl";
-import { useReducer } from "react";
-import {
-  INTIAL_STATE,
-  userExistReducer,
-} from "../../../Utills/UserAuthReducer";
 import { motion } from "framer-motion";
-import { useQuery } from "@tanstack/react-query";
 
 const ArticleCard2 = ({ blog }) => {
-  const [userExist, dispatch] = useReducer(userExistReducer, INTIAL_STATE);
-  const [bookmarkerd, setBookmarked] = useState(false);
-  const toast = useToast();
   const naviagte = useNavigate();
   const formatter = buildFormatter(frenchStrings);
   const regex = /(<([^>]+)>)/gi;
-
-  const { refetch: saveClickHandler } = useQuery(
-    ["sendSaveReq"],
-    () => {
-      return axios.get(`${baseDomain}/blogs/saveBlogForUser/${blog._id}`, {
-        headers: {
-          authorization: `Bearer ${localStorage.getItem("accesstoken")}`,
-        },
-      });
-    },
-    {
-      onSuccess: () => {
-        toast({
-          position: "top",
-          duration: 3000,
-          status: "success",
-          title: "Blog saved",
-          isClosable: false,
-        });
-        setBookmarked(!bookmarkerd);
-      },
-      enabled: false,
-    }
-  );
-
-  const saveClickFunction = () => {
-    if (!localStorage.getItem("accesstoken")) {
-      toast({
-        position: "top",
-        duration: 3000,
-        status: "error",
-        title: "Please login first",
-        isClosable: false,
-      });
-      return;
-    }
-    saveClickHandler();
-  };
 
   return (
     <Box
@@ -123,17 +72,6 @@ const ArticleCard2 = ({ blog }) => {
           </Text>
           <HStack justifyContent={"space-between"} w="full">
             <Text fontSize={"small"}>{getReadingTime(blog.HTMLBody)} min</Text>
-            {bookmarkerd ? (
-              <BsFillBookmarkCheckFill
-                cursor={"pointer"}
-                onClick={() => saveClickFunction()}
-              />
-            ) : (
-              <BsBookmarkPlus
-                cursor={"pointer"}
-                onClick={() => saveClickFunction()}
-              />
-            )}
           </HStack>
         </Stack>
       </Stack>

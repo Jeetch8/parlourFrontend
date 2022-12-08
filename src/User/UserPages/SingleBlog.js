@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import "./Unreset.scss";
-import React, { useEffect, useReducer, useState } from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import TimeAgo from "react-timeago";
@@ -12,22 +12,12 @@ import parse from "html-react-parser";
 import "./Unreset.scss";
 import { BiLike } from "react-icons/bi";
 import CommentSection from "../UserComponents/SinlgeBlog/CommentSection";
-import {
-  Avatar,
-  Box,
-  Flex,
-  HStack,
-  Image,
-  Text,
-  useToast,
-} from "@chakra-ui/react";
+import { Box, Flex, HStack, Image, Text, useToast } from "@chakra-ui/react";
 import RingLoader from "react-spinners/RingLoader";
 import "react-quill/dist/quill.snow.css";
 import NavBar from "../UserComponents/NavBar";
-import { Prose } from "@nikolovlazar/chakra-ui-prose";
 import { baseDomain } from "../../Utills/BaseUrl";
 import { AiFillLike } from "react-icons/ai";
-import { INTIAL_STATE, userExistReducer } from "../../Utills/UserAuthReducer";
 import { Footer } from "../UserComponents/Footer";
 
 const SingleBlog = () => {
@@ -36,10 +26,9 @@ const SingleBlog = () => {
   const [respData, setRespData] = useState({});
   const { blogId } = useParams();
   const formatter = buildFormatter(frenchStrings);
-  const [userExist, dispatch] = useReducer(userExistReducer, INTIAL_STATE);
   const toast = useToast();
 
-  const { data, isLoading, isFetching } = useQuery(
+  const { isLoading, isFetching } = useQuery(
     ["fetchSinglleBlog"],
     () => {
       return axios.get(`${baseDomain}/blogs/blog/${blogId}`);
@@ -48,14 +37,12 @@ const SingleBlog = () => {
       onSuccess: (data) => {
         setRespData(data.data.blog);
         const findUserLiked = data.data?.blog?.likes.findIndex((user) => {
-          console.log(user);
           return user === localStorage.getItem("userId");
         });
-        console.log(findUserLiked);
         if (findUserLiked === -1) {
-          setLikedBlog({ bool: true, num: data.data.blog.likes.length });
-        } else {
           setLikedBlog({ bool: false, num: data.data.blog.likes.length });
+        } else {
+          setLikedBlog({ bool: true, num: data.data.blog.likes.length });
         }
       },
     }
@@ -117,7 +104,7 @@ const SingleBlog = () => {
   };
 
   const likePostFunction = () => {
-    if (!userExist.authenticated) {
+    if (!localStorage.getItem("accesstoken")) {
       toast({
         position: "top",
         duration: 3000,
@@ -128,7 +115,7 @@ const SingleBlog = () => {
       return;
     }
     if (likedBlog.bool) {
-      if (!userExist.authenticated) {
+      if (!localStorage.getItem("accesstoken")) {
         toast({
           position: "top",
           duration: 3000,
@@ -141,7 +128,6 @@ const SingleBlog = () => {
     }
     sendLikeBlogReq();
   };
-  console.log(respData.commentArray);
 
   if (isLoading || isFetching) {
     return (
@@ -207,12 +193,12 @@ const SingleBlog = () => {
               >
                 <HStack>
                   {likedBlog.bool ? (
+                    <AiFillLike />
+                  ) : (
                     <BiLike
                       cursor={"pointer"}
                       onClick={() => likePostFunction()}
                     />
-                  ) : (
-                    <AiFillLike />
                   )}
                   <Text>{likedBlog.num}</Text>
                 </HStack>

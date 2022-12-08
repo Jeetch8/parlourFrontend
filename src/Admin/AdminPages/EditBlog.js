@@ -11,31 +11,39 @@ import {
   Text,
   useToast,
 } from "@chakra-ui/react";
+import { useQuery } from "@tanstack/react-query";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import { baseDomain } from "../../Utills/BaseUrl";
 import { useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const Editor = () => {
+  const blogId = useParams().blogId;
+  console.log(blogId);
   const toast = useToast();
   const naviagte = useNavigate();
   const editor = useRef(null);
   const [content, setContent] = useState("");
-  const [blogInfo, setBlogInfo] = useState({
-    editorHtml: "",
-    title: "",
-    image: "",
-  });
+  const [image, setImage] = useState("");
+  const [title, setTitle] = useState("");
 
-  const handeleFormDtata = (e) => {
-    setBlogInfo({ ...blogInfo, [e.target.name]: e.target.value });
-  };
-  const handleSubmit = (status) => {
-    if (
-      blogInfo.image === "" ||
-      blogInfo.editorHtml === "" ||
-      blogInfo.title === ""
-    ) {
+  const {} = useQuery(
+    ["fetchBlogToEdit"],
+    () => {
+      return axios.get(`${baseDomain}/blogs/blog/${blogId}`);
+    },
+    {
+      onSuccess: (data) => {
+        const blog = data.data.blog;
+        setTitle(blog.title);
+        setImage(blog.blogImg);
+        setContent(blog.HTMLBody);
+      },
+    }
+  );
+
+  const handleSubmit = () => {
+    if (image === "" || content === "" || title === "") {
       toast({
         title: "All Fields are madotary",
         status: "error",
@@ -47,12 +55,11 @@ const Editor = () => {
     }
     axios
       .post(
-        baseDomain + "/blogs/saveBlog",
+        baseDomain + `/blogs/editblog/${blogId}`,
         {
-          HTMLBody: `${blogInfo.editorHtml}`,
-          title: `${blogInfo.title}`,
-          status,
-          blogImg: blogInfo.image,
+          HTMLBody: `${content}`,
+          title: `${title}`,
+          blogImg: image,
         },
         {
           headers: {
@@ -69,9 +76,9 @@ const Editor = () => {
           isClosable: false,
           position: "top",
         });
-        setTimeout(() => {
-          naviagte("/admin/dashboard/blogs");
-        }, 2000);
+        // setTimeout(() => {
+        //   naviagte("/admin/dashboard/blogs");
+        // }, 2000);
       })
       .catch((error) => console.log(error));
   };
@@ -81,7 +88,7 @@ const Editor = () => {
     imgData.append("image", img);
     axios
       .post(baseDomain + "/imageUpload/imagaeUploadCloudniary", imgData)
-      .then((res) => setBlogInfo(...blogInfo, { image: res.data.image.src }));
+      .then((res) => setImage(res.data.image.src));
   };
 
   return (
@@ -106,18 +113,18 @@ const Editor = () => {
             fontWeight="medium"
             rounded={"full"}
             className="bg-green-500 text-white font-medium h-fit px-[1.5vw] py-[1vh] rounded-full"
-            onClick={() => handleSubmit("published")}
+            onClick={() => handleSubmit()}
           >
-            Publish
+            Save
           </Button>
           <Button
             size={{ base: "sm", lg: "md" }}
             rounded={"full"}
             backgroundColor={"blackAlpha.200"}
             className=" bg-zinc-500 text-white py-[1vh] px-[1.5vw] rounded-full"
-            onClick={() => handleSubmit("draft")}
+            onClick={() => naviagte("/admin/dashboard/blogs")}
           >
-            Draft
+            Cancel
           </Button>
         </HStack>
       </HStack>
@@ -134,10 +141,10 @@ const Editor = () => {
             cursor={"pointer"}
             overflow="hidden"
           >
-            {blogInfo.image ? (
+            {image ? (
               <Box h="10vh">
                 <Image
-                  src={blogInfo.image}
+                  src={image}
                   alt="teahub-io-sunflower-field-wallpaper-2752583"
                   border="0"
                   w={{ lg: "40vw", base: "70vw" }}
@@ -168,9 +175,10 @@ const Editor = () => {
           placeholder="Title"
           type="text"
           width={"full"}
+          value={title}
           className="border-[1px] border-black w-full my-[5vh] p-[4px] text-[25px]"
           // fontSize={}
-          onChange={(e) => handeleFormDtata(e)}
+          onChange={(e) => setTitle(e.target.value)}
         />
       </Box>
       <Box h={"83vh"} w={{ base: "96vw", lg: "70vw" }} marginX="auto">
